@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import 'third_screen.dart';
+import '../models/user_model.dart'; // pastikan import model User kalau diperlukan
 
 class SecondScreen extends StatelessWidget {
   final String name;
@@ -42,18 +43,69 @@ class SecondScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 100),
+
+            // Card tampilkan avatar, nama, dan email
             Center(
-              child: Text(
-                userProvider.selectedUser.isNotEmpty
-                    ? userProvider.selectedUser
-                    : "Selected User Name",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF15133C),
-                ),
-              ),
+              child: userProvider.selectedUser.isNotEmpty
+                  ? Card(
+                      elevation: 4,
+                      shadowColor: Colors.black26,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 16),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF0F4F8),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 28,
+                              backgroundImage: NetworkImage(
+                                userProvider.selectedUserAvatar ?? '',
+                              ),
+                              backgroundColor: Colors.grey[300],
+                            ),
+                            const SizedBox(width: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  userProvider.selectedUser,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF15133C),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  userProvider.selectedUserEmail ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : const Text(
+                      "Selected User not chosen yet",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF15133C),
+                      ),
+                    ),
             ),
+
             const Spacer(),
             SizedBox(
               width: double.infinity,
@@ -73,7 +125,7 @@ class SecondScreen extends StatelessWidget {
                 ),
                 child: const Text(
                   "Choose a User",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16,  color: Colors.white ),
                 ),
               ),
             )

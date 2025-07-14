@@ -42,9 +42,13 @@ class _ThirdScreenState extends State<ThirdScreen> {
   setState(() => isLoading = true);
 
   try {
-    final response = await http.get(
-      Uri.parse('https://reqres.in/api/users?page=$currentPage'),
-    );
+   final response = await http.get(
+  Uri.parse('https://reqres.in/api/users?page=$currentPage'),
+  headers: {
+    'x-api-key': 'reqres-free-v1',
+  },
+);
+
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -113,8 +117,11 @@ class _ThirdScreenState extends State<ThirdScreen> {
                 title: Text('${user.firstName} ${user.lastName}'),
                 subtitle: Text(user.email),
                 onTap: () {
-                  Provider.of<UserProvider>(context, listen: false)
-                      .setSelectedUser('${user.firstName} ${user.lastName}');
+                  Provider.of<UserProvider>(context, listen: false).setSelectedUserData(
+                    '${user.firstName} ${user.lastName}',
+                    user.email,
+                    user.avatar,
+                  );
                   Navigator.pop(context);
                 },
               );

@@ -22,11 +22,49 @@ class _FirstScreenState extends State<FirstScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(result ? 'isPalindrome' : 'not palindrome'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: Colors.white,
+        titlePadding: const EdgeInsets.only(top: 24),
+        contentPadding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+        title: Column(
+          children: [
+            Icon(
+              result ? Icons.check_circle_outline : Icons.cancel_outlined,
+              size: 48,
+              color: result ? Colors.green : Colors.redAccent,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              result ? 'It is a Palindrome!' : 'Not a Palindrome!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: result ? Colors.green : Colors.redAccent,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          result
+              ? "The sentence is the same forward and backward."
+              : "This sentence is not a palindrome.",
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 14, color: Colors.black87),
+        ),
+        actionsAlignment: MainAxisAlignment.center,
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("OK"),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: result ? Colors.green : Colors.redAccent,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold)),
           )
         ],
       ),
@@ -57,9 +95,9 @@ class _FirstScreenState extends State<FirstScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF77A1D3),
-              Color(0xFF79CBCA),
-              Color(0xFFE684AE),
+              Color.fromARGB(255, 109, 165, 233),
+              Color.fromARGB(255, 114, 158, 157),
+              Color.fromARGB(255, 247, 190, 214),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -68,19 +106,19 @@ class _FirstScreenState extends State<FirstScreen> {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(30),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white.withOpacity(0.2),
                     ),
                     child: const Icon(
                       Icons.person_add_alt_1,
-                      size: 60,
+                      size: 50,
                       color: Colors.white,
                     ),
                   ),
@@ -93,8 +131,9 @@ class _FirstScreenState extends State<FirstScreen> {
                       fillColor: Colors.white,
                       hintText: 'Name',
                       hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(18),
                         borderSide: BorderSide.none,
                       ),
                     ),
@@ -108,43 +147,60 @@ class _FirstScreenState extends State<FirstScreen> {
                       fillColor: Colors.white,
                       hintText: 'Palindrome',
                       hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(18),
                         borderSide: BorderSide.none,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
                     height: 48,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF35586C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
                       onPressed: () {
                         bool result = isPalindrome(sentenceController.text);
                         showResultDialog(result);
                       },
-                      child: const Text("CHECK"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF35586C),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        "CHECK",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     height: 48,
                     child: ElevatedButton(
+                      onPressed: goToSecondScreen,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF35586C),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      onPressed: goToSecondScreen,
-                      child: const Text("NEXT"),
+                      child: const Text(
+                        "NEXT",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
                     ),
                   ),
                 ],
